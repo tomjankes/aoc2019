@@ -7,15 +7,13 @@ import org.spekframework.spek2.style.specification.describe
 
 class CalculateFuelSpec : Spek({
     describe("calculateFuel function") {
-        listOf(
-            Pair(12, 2),
-            Pair(14, 2),
-            Pair(1969, 654),
-            Pair(100756, 33583)
-        ).forEach {
-            it("should calculate ${it.second} for ${it.first}") {
-                //given
-                val (input, expected) = it
+        mapOf(
+            12 to 2,
+            14 to 2,
+            1969 to 654,
+            100756 to 33583
+        ).forEach { (input, expected) ->
+            it("should calculate $expected for $input") {
                 //when
                 val calculatedFuel = calculateFuel(input)
                 //then
@@ -24,16 +22,14 @@ class CalculateFuelSpec : Spek({
         }
     }
 
-    listOf(
-        Pair(12, 2),
-        Pair(14, 2),
-        Pair(1969, 966),
-        Pair(100756, 50346)
-    ).forEach {
+    mapOf(
+        12 to 2,
+        14 to 2,
+        1969 to 966,
+        100756 to 50346
+    ).forEach { (input, expected) ->
         describe("calculateFuelFuel function") {
-            it("should calculate ${it.second} for ${it.first}") {
-                //given
-                val (input, expected) = it
+            it("should calculate $input for $expected") {
                 //when
                 val calculatedFuel = calculateFuelFuel(input)
                 //then
@@ -42,9 +38,7 @@ class CalculateFuelSpec : Spek({
         }
 
         describe("tailRecursiveCalculateFuelFuel function") {
-            it("should calculate ${it.second} for ${it.first}") {
-                //given
-                val (input, expected) = it
+            it("should calculate $input for $expected") {
                 //when
                 val calculatedFuel = calculateFuelFuel(input)
                 //then
