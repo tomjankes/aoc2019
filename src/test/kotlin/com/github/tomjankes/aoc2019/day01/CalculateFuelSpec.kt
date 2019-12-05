@@ -40,7 +40,7 @@ class CalculateFuelSpec : Spek({
         describe("tailRecursiveCalculateFuelFuel function") {
             it("should calculate $input for $expected") {
                 //when
-                val calculatedFuel = calculateFuelFuel(input)
+                val calculatedFuel = tailRecursiveCalculateFuel(input)
                 //then
                 assertThat(calculatedFuel, equalTo(expected))
             }
