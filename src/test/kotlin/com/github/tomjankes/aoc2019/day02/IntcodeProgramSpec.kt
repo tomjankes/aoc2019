@@ -33,9 +33,17 @@ class IntcodeProgramSpec : Spek({
             //given
             val correctResult = 4570637
             //when
-            val result = runTask02()
+            val result = runTask01()
             //then
             assertThat(result, equalTo(correctResult))
+        }
+
+        it("should correctly find what arguments give desired output") {
+            //when
+            val result = runTask02()!!
+            //then
+            assertThat(result.answer, equalTo(5485))
+            assertThat(runTask01(result.noun, result.verb), equalTo(19690720))
         }
     }
 })

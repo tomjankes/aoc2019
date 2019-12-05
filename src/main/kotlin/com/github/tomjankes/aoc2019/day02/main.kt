@@ -23,18 +23,23 @@ tailrec fun run(program: IntArray, pos: Int = 0) : IntArray {
 fun String.toIntArray() = this.split(',').map { it.toInt() }.toIntArray()
 
 fun run(program: String) : IntArray = run(program.toIntArray())
-
-fun runTask(program: String, noun: Int, verb: Int) = runTask(program.toIntArray(), noun, verb)
-
 fun runTask(program: IntArray, noun: Int, verb: Int): IntArray {
     program[1] = noun
     program[2] = verb
     return run(program)
 }
+fun runTask01(noun: Int, verb: Int) : Int = runTask("input02.txt".getFile().readText().toIntArray(), noun, verb)[0]
+fun runTask01() : Int = runTask01(12, 2)
 
-fun runTask02() : Int = runTask("input02.txt".getFile().readText().toIntArray(), 12, 2)[0]
+data class Task02Result(
+    val noun: Int,
+    val verb: Int
+) {
+    val answer = 100 * noun + verb
+    override fun toString(): String = "Noun: $noun, verb: $verb, answer: $answer"
+}
 
-fun findTheInputs() {
+fun runTask02() : Task02Result? {
     val initialProgram = "input02.txt".getFile().readText().toIntArray()
     val desiredOutput = 19690720
 
@@ -43,14 +48,13 @@ fun findTheInputs() {
             val program = initialProgram.clone()
             val output = runTask(program, noun, verb)[0]
             if (output == desiredOutput) {
-                val answer = 100 * noun + verb
-                println("Noun: $noun, verb: $verb, answer: $answer")
-                return
+                return Task02Result(noun, verb)
             }
         }
     }
+    return null
 }
 
 fun main() {
-    findTheInputs()
+    println(runTask02())
 }
