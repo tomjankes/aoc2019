@@ -49,17 +49,15 @@ tailrec fun createWire(startingPoint: Point, movementsToRun: List<Movement>, poi
     return createWire(points.last(), movementsToRun.drop(1), points)
 }
 
-fun crosses(first: List<Point>, second: List<Point>): Set<Point> {
+fun intersections(first: List<Point>, second: List<Point>): Set<Point> {
     return first.toSet().intersect(second)
 }
 
 fun runTask01(firstWire: String, secondWire: String): Int? {
-    return runTask01(firstWire.parseInput(), secondWire.parseInput())
-}
-
-fun runTask01(firstWire: List<Movement>, secondWire: List<Movement>): Int? {
     val startingPoint = Point(0, 0)
-    return crosses(createWire(startingPoint, firstWire), createWire(startingPoint, secondWire))
+    val firstWirePoints = createWire(startingPoint, firstWire.parseInput())
+    val secondWirePoints = createWire(startingPoint, secondWire.parseInput())
+    return intersections(firstWirePoints, secondWirePoints)
         .map { startingPoint.manhattanDistance(it) }
         .min()
 }
@@ -69,6 +67,25 @@ fun runTask01(): Int? {
     return runTask01(input[0], input[1])
 }
 
+fun combinedStepsToReachIntersection(firstWire: List<Point>, secondWire: List<Point>, intersection: Point) : Int {
+    return firstWire.indexOf(intersection) + secondWire.indexOf(intersection) + 2
+}
+
+fun runTask02(firstWire: String, secondWire: String): Int? {
+    val startingPoint = Point(0, 0)
+    val firstWirePoints = createWire(startingPoint, firstWire.parseInput())
+    val secondWirePoints = createWire(startingPoint, secondWire.parseInput())
+    return intersections(firstWirePoints, secondWirePoints)
+        .map { combinedStepsToReachIntersection(firstWirePoints, secondWirePoints, it) }
+        .min()
+}
+
+fun runTask02(): Int? {
+    val input = readInputFromResources()
+    return runTask02(input[0], input[1])
+}
+
 fun main() {
     println("Smallest distance is ${runTask01()}")
+    println("Smallest number of steps is ${runTask02()}")
 }
